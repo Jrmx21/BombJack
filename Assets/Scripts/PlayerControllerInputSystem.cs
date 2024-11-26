@@ -113,11 +113,11 @@ public class PlayerControllerInputSystem : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
 
-        // if (col.gameObject.CompareTag("Ground"))
-        // {
-        //     Debug.Log("suelo");
-        //     jumpState = JumpState.Grounded;
-        // }
+        if (col.gameObject.CompareTag("Ground"))
+        {
+            Debug.Log("suelo");
+            jumpState = JumpState.Grounded;
+        }
         if (col.gameObject.CompareTag("Roof"))
         {
             jumpState = JumpState.Falling;
@@ -127,6 +127,6 @@ public class PlayerControllerInputSystem : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        // Gizmos.DrawLine();
+        Gizmos.DrawLine(collider.bounds.center, collider.bounds.center + Vector3.down * (collider.bounds.extents.y+0.1f));
     }
 }
