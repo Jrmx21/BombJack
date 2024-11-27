@@ -23,6 +23,7 @@ public class BombController : MonoBehaviour
     [SerializeField] private float activateTick = 0.1f;
     [SerializeField] private float catchedTick = 0.5f;
     private float timerAnim = 0f;
+    private float timerAnimFinish = 0f;
     // References to components
     private Collider2D collider2d;
     private SpriteRenderer spriteRenderer;
@@ -39,28 +40,33 @@ public class BombController : MonoBehaviour
             spriteRenderer.sprite = activeFrame01;
             //empieza animación 
             timerAnim = activateTick;
+          
         }
         else
         {
             spriteRenderer.sprite = inactiveFrame01;
         }
+          timerAnimFinish = catchedTick;
     }
     void Update()
     {
         if (isFinishing)
         {
-            timerAnim -= Time.deltaTime;
-            if (timerAnim > catchedTick / 4 * 3)
+
+            timerAnimFinish -= Time.deltaTime;
+            if (timerAnimFinish > catchedTick / 4 * 3 && !isActive)
             {
+                Debug.Log("no activau");
                 spriteRenderer.sprite = inactiveCatchedFrame01;
             }
-            else if (timerAnim > catchedTick / 4 * 2)
+            else if (timerAnimFinish > catchedTick / 4 * 2 && !isActive)
             {
-                spriteRenderer.sprite = inactiveCatchedFrame02;
+                spriteRenderer.sprite = inactiveCatchedFrame02 ;
             }
-            else if (timerAnim > catchedTick / 4)
+            else if (timerAnimFinish > catchedTick / 4 && !isActive)
             {
                 spriteRenderer.sprite = inactiveCatchedFrame03;
+
             }
             else
             {
@@ -70,10 +76,11 @@ public class BombController : MonoBehaviour
                 }
             }
 
-            if (timerAnim <= 0.0f)
+            if (timerAnimFinish <= 0.0f)
             {
                 // Destroy the bomb object
                 Destroy(gameObject);
+                timerAnimFinish = catchedTick;
             }
 
             // If is finishing, return (ignore the rest of the update)
@@ -108,13 +115,12 @@ public class BombController : MonoBehaviour
             //inactive collider
             collider2d.enabled = false;
             //destroy the bomb
-            isFinishing=true;
+            isFinishing = true;
             //reset the timer
-            catchedTick=0;
             Debug.Log("coge moneda");
 
         }
     }
 }
 
-// TODO: CHOCA EN EL TECHO Y SALTA INFINITO, LA ANIMACION DE CUANDO SE COGE LA BOMBA NO FUNCIONA BIEN
+// TODO: CHOCA EN EL TECHO Y SALTA INFINITO, LA ANIMACION DE CUANDO SE COGE LA BOMBA NO FUNCIONA BIEN, MEJORAR MOVIMIENTO PERSONAJE

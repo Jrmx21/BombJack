@@ -12,8 +12,8 @@ public class PlayerControllerInputSystem : MonoBehaviour
     //Debug
     [SerializeField] private Vector2 movement;
 
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float verticalSpeed = 5f;
+    [SerializeField] private float speed = 7f;
+    [SerializeField] private float verticalSpeed = 6f;
 
     // [SerializeField] private bool isGrounded;
 
@@ -84,6 +84,18 @@ public class PlayerControllerInputSystem : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (jumpState == JumpState.Grounded)
+        {
+            if (movement.y > 0)
+            {
+                jumpState = JumpState.JumpingUp;
+            }
+            else if (rb.velocity.y < 0)
+            {
+                jumpState = JumpState.Falling;
+            }
+    
+        }
         RaycastHit2D hit =
       Physics2D.Raycast(collider.bounds.center, Vector2.down);
         if (hit.collider)

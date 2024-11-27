@@ -140,6 +140,6 @@ MonoBehaviour:
   inactiveCatchedFrame02: {fileID: 540489800, guid: 55b99176b890fde44af38be6d1271f6c, type: 3}
   inactiveCatchedFrame03: {fileID: -1433817634, guid: 55b99176b890fde44af38be6d1271f6c, type: 3}
   activeCatchedFrame01: {fileID: 814941651, guid: 55b99176b890fde44af38be6d1271f6c, type: 3}
-  isActive: 1
+  isActive: 0
   activateTick: 0.2
   catchedTick: 0.5
