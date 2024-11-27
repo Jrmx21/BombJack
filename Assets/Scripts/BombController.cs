@@ -123,4 +123,4 @@ public class BombController : MonoBehaviour
     }
 }
 
-// TODO: CHOCA EN EL TECHO Y SALTA INFINITO, LA ANIMACION DE CUANDO SE COGE LA BOMBA NO FUNCIONA BIEN, MEJORAR MOVIMIENTO PERSONAJE
+// TOFIX 1: Al pulsar "w" el jugador vuela infinito y lo mismo con "uparrow"
