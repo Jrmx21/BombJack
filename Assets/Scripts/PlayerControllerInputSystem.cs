@@ -15,6 +15,7 @@ public class PlayerControllerInputSystem : MonoBehaviour
     [SerializeField] private float speed = 7f;
     [SerializeField] private float verticalSpeed = 6f;
 
+
     // [SerializeField] private bool isGrounded;
 
     private enum JumpState

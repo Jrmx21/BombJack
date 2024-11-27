@@ -16,6 +16,7 @@ public class BombController : MonoBehaviour
 
     [SerializeField] private Sprite activeCatchedFrame01;
 
+    [SerializeField] private GameManager gameManager;
     //States 
     [SerializeField] private bool isActive = false;
     private bool isFinishing;
@@ -32,6 +33,8 @@ public class BombController : MonoBehaviour
     {
         collider2d = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        gameManager = FindObjectOfType<GameManager>();
+
     }
     void Start()
     {
@@ -40,13 +43,13 @@ public class BombController : MonoBehaviour
             spriteRenderer.sprite = activeFrame01;
             //empieza animación 
             timerAnim = activateTick;
-          
+
         }
         else
         {
             spriteRenderer.sprite = inactiveFrame01;
         }
-          timerAnimFinish = catchedTick;
+        timerAnimFinish = catchedTick;
     }
     void Update()
     {
@@ -61,7 +64,7 @@ public class BombController : MonoBehaviour
             }
             else if (timerAnimFinish > catchedTick / 4 * 2 && !isActive)
             {
-                spriteRenderer.sprite = inactiveCatchedFrame02 ;
+                spriteRenderer.sprite = inactiveCatchedFrame02;
             }
             else if (timerAnimFinish > catchedTick / 4 && !isActive)
             {
@@ -117,8 +120,15 @@ public class BombController : MonoBehaviour
             //destroy the bomb
             isFinishing = true;
             //reset the timer
-            Debug.Log("coge moneda");
-
+            if (isActive)
+            {
+                gameManager.puntuar(200);
+            }
+            else
+            {
+                gameManager.puntuar(100);
+            }
+            
         }
     }
 }
