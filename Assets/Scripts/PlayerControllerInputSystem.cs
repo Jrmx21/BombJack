@@ -11,14 +11,14 @@ public class PlayerControllerInputSystem : MonoBehaviour
 
     // Start is called before the first frame update{
 
-
+    private SpriteRenderer sprite;
     //Debug
     [SerializeField] private Vector2 movement;
 
     [SerializeField] private float speed = 7f;
     [SerializeField] private float verticalSpeed = 6f;
 
-
+    private Animator animator;
     // [SerializeField] private bool isGrounded;
 
     private enum JumpState
@@ -32,6 +32,11 @@ public class PlayerControllerInputSystem : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private Collider2D collider;
 
+    void Start()
+    {   
+        sprite = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+    }
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -152,5 +157,25 @@ public class PlayerControllerInputSystem : MonoBehaviour
     public void OnPlayerKilled()
     {
         Debug.Log("moriste");
+    }
+    void Update()
+    {
+        if (jumpState == JumpState.Grounded)
+        {
+            if (rb.velocity.x == 0)
+            {
+                animator.SetInteger("DirX", 0);
+            }
+            else if (rb.velocity.x > 0)
+            {
+                animator.SetInteger("DirX", 1);
+                sprite.flipX= false;
+            }
+            else if (rb.velocity.x < 0)
+            {
+                animator.SetInteger("DirX", -1);
+                sprite.flipX= true;
+            }
+        }
     }
 }
