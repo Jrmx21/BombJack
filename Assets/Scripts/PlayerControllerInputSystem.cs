@@ -33,7 +33,7 @@ public class PlayerControllerInputSystem : MonoBehaviour
     [SerializeField] private Collider2D collider;
 
     void Start()
-    {   
+    {
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
@@ -160,6 +160,7 @@ public class PlayerControllerInputSystem : MonoBehaviour
     }
     void Update()
     {
+        animator.SetBool("isPlanning", false);
         if (jumpState == JumpState.Grounded)
         {
             if (rb.velocity.x == 0)
@@ -169,12 +170,31 @@ public class PlayerControllerInputSystem : MonoBehaviour
             else if (rb.velocity.x > 0)
             {
                 animator.SetInteger("DirX", 1);
-                sprite.flipX= false;
+                sprite.flipX = false;
             }
             else if (rb.velocity.x < 0)
             {
                 animator.SetInteger("DirX", -1);
-                sprite.flipX= true;
+                sprite.flipX = true;
+            }
+        }
+
+        if (jumpState == JumpState.Planning)
+        {
+            animator.SetBool("isPlanning", true);
+            if (rb.velocity.x == 0)
+            {
+                animator.SetInteger("DirXPlan", 0);
+            }
+            else if (rb.velocity.x > 0)
+            {
+                animator.SetInteger("DirXPlan", 1);
+                sprite.flipX = false;
+            }
+            else if (rb.velocity.x < 0)
+            {
+                animator.SetInteger("DirXPlan", -1);
+                sprite.flipX = true;
             }
         }
     }
