@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class PlayerControllerInputSystem : MonoBehaviour
 {
+
     // Start is called before the first frame update{
+
 
     //Debug
     [SerializeField] private Vector2 movement;
@@ -56,6 +59,7 @@ public class PlayerControllerInputSystem : MonoBehaviour
         // rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
     }
 
+
     private void OnJumpStarted(InputAction.CallbackContext context)
     {
         if (jumpState == JumpState.Grounded)
@@ -70,6 +74,7 @@ public class PlayerControllerInputSystem : MonoBehaviour
 
 
     }
+
     private void OnMove(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
@@ -95,7 +100,7 @@ public class PlayerControllerInputSystem : MonoBehaviour
             {
                 jumpState = JumpState.Falling;
             }
-    
+
         }
         RaycastHit2D hit =
       Physics2D.Raycast(collider.bounds.center, Vector2.down);
@@ -128,7 +133,7 @@ public class PlayerControllerInputSystem : MonoBehaviour
 
         if (col.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("suelo");
+
             jumpState = JumpState.Grounded;
         }
         if (col.gameObject.CompareTag("Roof"))
@@ -140,6 +145,12 @@ public class PlayerControllerInputSystem : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(collider.bounds.center, collider.bounds.center + Vector3.down * (collider.bounds.extents.y+0.1f));
+        Gizmos.DrawLine(collider.bounds.center, collider.bounds.center + Vector3.down * (collider.bounds.extents.y + 0.1f));
+    }
+
+    // For player killed
+    public void OnPlayerKilled()
+    {
+        Debug.Log("moriste");
     }
 }

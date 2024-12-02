@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4807622929187945601}
   - component: {fileID: 273398451577437716}
   - component: {fileID: 8506428605122247883}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Bomb
-  m_TagString: Untagged
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -140,6 +140,7 @@ MonoBehaviour:
   inactiveCatchedFrame02: {fileID: 540489800, guid: 55b99176b890fde44af38be6d1271f6c, type: 3}
   inactiveCatchedFrame03: {fileID: -1433817634, guid: 55b99176b890fde44af38be6d1271f6c, type: 3}
   activeCatchedFrame01: {fileID: 814941651, guid: 55b99176b890fde44af38be6d1271f6c, type: 3}
+  gameManager: {fileID: 0}
   isActive: 0
   activateTick: 0.2
   catchedTick: 0.5

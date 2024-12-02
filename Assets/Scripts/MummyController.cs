@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class MummyController : MonoBehaviour
+public class MummyController : Enemy
 {
-    private Animator animator;
 
     // Left and right max movement
     [SerializeField] private float leftMaxX = -4.5f;
     [SerializeField] private float rightMaxX = 2f;
     [SerializeField] private float speed = 1.0f;
 
-    private bool isMovingRight = true;
-
     void Awake()
     {
         animator = GetComponent<Animator>();
     }
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         animator.Play("Idle");
         // position the mummy at the left point
         transform.position = new Vector2(leftMaxX, transform.position.y);
