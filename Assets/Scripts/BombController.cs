@@ -59,7 +59,6 @@ public class BombController : MonoBehaviour
             timerAnimFinish -= Time.deltaTime;
             if (timerAnimFinish > catchedTick / 4 * 3 && !isActive)
             {
-                Debug.Log("no activau");
                 spriteRenderer.sprite = inactiveCatchedFrame01;
             }
             else if (timerAnimFinish > catchedTick / 4 * 2 && !isActive)
@@ -128,7 +127,7 @@ public class BombController : MonoBehaviour
             {
                 gameManager.puntuar(100);
             }
-            
+
         }
     }
 }

@@ -17,6 +17,8 @@ public class PlayerControllerInputSystem : MonoBehaviour
 
     [SerializeField] private float speed = 7f;
     [SerializeField] private float verticalSpeed = 6f;
+    public delegate void OnPlayerKilled();
+    public event OnPlayerKilled onPlayerKilled;
 
     private Animator animator;
     // [SerializeField] private bool isGrounded;
@@ -36,7 +38,12 @@ public class PlayerControllerInputSystem : MonoBehaviour
     {
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        
     }
+    // public void OnPlayerKilled()
+    // {
+    //     onPlayerKilled?.Invoke();
+    // }
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -154,18 +161,27 @@ public class PlayerControllerInputSystem : MonoBehaviour
     }
 
     // For player killed
-    public void OnPlayerKilled()
-    {
-        Debug.Log("moriste");
-    }
+   
     void Update()
     {
-        animator.SetBool("isPlanning", false);
+        updateAnimation();
+    }
+
+    void updateAnimation()
+    {
         if (jumpState == JumpState.Grounded)
         {
+            animator.SetInteger("DirXPlan", 0);
+            animator.SetBool("PlayerJumpingRight", false);
+            animator.SetBool("PlayerJumpingLeft", false);
+            animator.SetBool("isGrounded", true);
+            animator.SetBool("isFalling", false);
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isPlanning", false);
             if (rb.velocity.x == 0)
             {
                 animator.SetInteger("DirX", 0);
+
             }
             else if (rb.velocity.x > 0)
             {
@@ -181,6 +197,11 @@ public class PlayerControllerInputSystem : MonoBehaviour
 
         if (jumpState == JumpState.Planning)
         {
+            animator.SetBool("PlayerJumpingRight", false);
+            animator.SetBool("PlayerJumpingLeft", false);
+            animator.SetInteger("DirX", 0);
+            animator.SetBool("isFalling", false);
+            animator.SetBool("isJumping", false);
             animator.SetBool("isPlanning", true);
             if (rb.velocity.x == 0)
             {
@@ -197,5 +218,40 @@ public class PlayerControllerInputSystem : MonoBehaviour
                 sprite.flipX = true;
             }
         }
+        if (jumpState == JumpState.JumpingUp)
+        {
+            animator.SetInteger("DirX", 0);
+            animator.SetBool("isPlanning", false);
+            animator.SetBool("isFalling", false);
+            animator.SetBool("isJumping", true);
+            if (rb.velocity.x > 0)
+            {
+                animator.SetBool("PlayerJumpingRight", true);
+
+                animator.SetBool("PlayerJumpingLeft", false);
+            }
+            else if (rb.velocity.x < 0)
+            {
+                animator.SetBool("PlayerJumpingLeft", true);
+                animator.SetBool("PlayerJumpingRight", false);
+
+            }
+            else if (rb.velocity.x == 0)
+            {
+                animator.SetBool("PlayerJumpingRight", false);
+                animator.SetBool("PlayerJumpingLeft", false);
+            }
+        }
+        if (jumpState == JumpState.Falling)
+        {
+            animator.SetBool("PlayerJumpingRight", false);
+            animator.SetBool("PlayerJumpingLeft", false);
+            animator.SetInteger("DirX", 0);
+            animator.SetBool("isPlanning", false);
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isFalling", true);
+        }
+
     }
+    // TODO: jumping l and r , mantener salto que pueda planear cuando choque con el techo.
 }

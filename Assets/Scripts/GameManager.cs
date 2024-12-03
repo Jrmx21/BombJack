@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
 
 
+    [SerializeField] private ControlHUD controlHUD;
     // SINGLETON 
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
@@ -30,20 +31,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private const float DELTA_HUD = 0.5f;
+    private float timerHUD;
+    private int lives;
+    [SerializeField] private PlayerControllerInputSystem player;
+
     [SerializeField] private int puntuacion;
     // Coge el texto de la puntuación que es un TMP
-    [SerializeField] private TMPro.TextMeshProUGUI textoPuntuacion;
 
+    void Start()
+    {
+        controlHUD.setPuntuacionTxt(0);
+        controlHUD.setVidasTxt(0);
+        controlHUD.setTiempoTxt(0);
+    }
     public void puntuar(int puntos)
     {
         puntuacion += puntos;
-        textoPuntuacion.text = puntuacion.ToString();
+        controlHUD.setPuntuacionTxt(puntos);
+    }
+    public void PlayerKilled(){
+        Debug.Log("Player killed");
+        controlHUD.setVidasTxt(--lives);
     }
 
-    // game state
-    private float _timer;
-    
-    
     // player reference
     [SerializeField] private PlayerControllerInputSystem _player;
     public PlayerControllerInputSystem Player
@@ -55,16 +66,20 @@ public class GameManager : MonoBehaviour
             // _player.OnPlayerKilledEvent += OnPlayerKilled;
         }
     }
-    
-    
-    
-    public void OnPlayerKilled(){
 
-    }
+
+
+
 
     // Update is called once per frame
     void Update()
     {
+        timerHUD += Time.deltaTime;
+        if (timerHUD >= DELTA_HUD)
+        {
 
+            // controlHUD.setTiempoTxt();
+            timerHUD = 0;
+        }
     }
 }

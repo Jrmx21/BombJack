@@ -9,7 +9,7 @@ public class MummyController : Enemy
     // Left and right max movement
     [SerializeField] private float leftMaxX = -4.5f;
     [SerializeField] private float rightMaxX = 2f;
-    [SerializeField] private float speed = 1.0f;
+
 
     void Awake()
     {
@@ -23,7 +23,7 @@ public class MummyController : Enemy
         // position the mummy at the left point
         transform.position = new Vector2(leftMaxX, transform.position.y);
         isMovingRight = true;
-        animator.Play("MummyWakRight");
+        animator.Play("MummyWalkRight");
     }
 
     void Update()
