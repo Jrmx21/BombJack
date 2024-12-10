@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
 
 
-    [SerializeField] private ControlHUD controlHUD;
+
     // SINGLETON 
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
@@ -30,10 +30,11 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-
-    private const float DELTA_HUD = 0.5f;
+    [SerializeField] private ControlHUD controlHUD;
+    [SerializeField] private int seconds;
+    private const float DELTA_HUD = 1f;
     private float timerHUD;
-    private int lives;
+    [SerializeField] private int lives = 3;
     [SerializeField] private PlayerControllerInputSystem player;
 
     [SerializeField] private int puntuacion;
@@ -41,29 +42,37 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        controlHUD = FindObjectOfType<ControlHUD>();
         controlHUD.setPuntuacionTxt(0);
-        controlHUD.setVidasTxt(0);
+        controlHUD.setVidasTxt(lives);
         controlHUD.setTiempoTxt(0);
+        player.OnPlayerKilledEvent += PlayerKilled;
     }
     public void puntuar(int puntos)
     {
-        puntuacion += puntos;
+        puntuacion = puntuacion + puntos;
         controlHUD.setPuntuacionTxt(puntos);
     }
-    public void PlayerKilled(){
+    public void PlayerKilled()
+    {
         Debug.Log("Player killed");
         controlHUD.setVidasTxt(--lives);
+        if (lives <= 0)
+        {
+            controlHUD.setGameOver();
+        }
+        
     }
 
     // player reference
-    [SerializeField] private PlayerControllerInputSystem _player;
+
     public PlayerControllerInputSystem Player
     {
-        get => _player;
+        get => player;
         set
         {
-            _player = value;
-            // _player.OnPlayerKilledEvent += OnPlayerKilled;
+            player = value;
+            player.OnPlayerKilledEvent += PlayerKilled;
         }
     }
 
@@ -77,8 +86,8 @@ public class GameManager : MonoBehaviour
         timerHUD += Time.deltaTime;
         if (timerHUD >= DELTA_HUD)
         {
-
-            // controlHUD.setTiempoTxt();
+            seconds++;
+            controlHUD.setTiempoTxt(seconds);
             timerHUD = 0;
         }
     }

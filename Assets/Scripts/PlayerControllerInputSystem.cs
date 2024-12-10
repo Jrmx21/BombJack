@@ -18,7 +18,7 @@ public class PlayerControllerInputSystem : MonoBehaviour
     [SerializeField] private float speed = 7f;
     [SerializeField] private float verticalSpeed = 6f;
     public delegate void OnPlayerKilled();
-    public event OnPlayerKilled onPlayerKilled;
+    public event OnPlayerKilled OnPlayerKilledEvent;
 
     private Animator animator;
     // [SerializeField] private bool isGrounded;
@@ -40,10 +40,10 @@ public class PlayerControllerInputSystem : MonoBehaviour
         animator = GetComponent<Animator>();
         
     }
-    // public void OnPlayerKilled()
-    // {
-    //     onPlayerKilled?.Invoke();
-    // }
+    public void onPlayerKilled()
+    {
+        OnPlayerKilledEvent?.Invoke();
+    }
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

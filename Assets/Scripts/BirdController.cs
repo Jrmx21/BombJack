@@ -32,19 +32,12 @@ public class BirdController : Enemy
             isMovingRight = false;
             animator.SetInteger("DirX", 0);
         }
-       
+
 
         // TOFIX ANIMACION ARRIBA O ABAJO
         //  animator.SetInteger("DirY", direction.y != 0 ? 1 : 0);
         // New movement of bird
         transform.position += speed * Time.deltaTime * direction.normalized;
-    }
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.CompareTag("Player"))
-        {
-            player.OnPlayerKilled();
-        }
     }
     void LateUpdate()
     {
