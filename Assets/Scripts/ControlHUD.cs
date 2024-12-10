@@ -33,18 +33,10 @@ public class ControlHUD : MonoBehaviour
     {
         switch(vidas)
         {
-            case 3:
-                imagenVida1.gameObject.SetActive(true);
-                imagenVida2.gameObject.SetActive(true);
-                imagenVida3.gameObject.SetActive(true);
-                break;
             case 2:
-                imagenVida1.gameObject.SetActive(true);
-                imagenVida2.gameObject.SetActive(true);
                 imagenVida3.gameObject.SetActive(false);
                 break;
             case 1:
-                imagenVida1.gameObject.SetActive(true);
                 imagenVida2.gameObject.SetActive(false);
                 imagenVida3.gameObject.SetActive(false);
                 break;
