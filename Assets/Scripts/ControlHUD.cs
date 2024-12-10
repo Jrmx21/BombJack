@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ControlHUD : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class ControlHUD : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI textoVidas;
     [SerializeField] private TMPro.TextMeshProUGUI textoTiempo;
     [SerializeField] private TMPro.TextMeshProUGUI textoGameOver;
+    [SerializeField] private Image imagenVida1;
+    [SerializeField] private Image imagenVida2;
+    [SerializeField] private Image imagenVida3;
 
     public void setTiempoTxt(int tiempo)
     {
@@ -27,10 +31,33 @@ public class ControlHUD : MonoBehaviour
     }
     public void setVidasTxt(int vidas)
     {
-        textoVidas.text = "LIVES X" + vidas.ToString();
+        switch(vidas)
+        {
+            case 3:
+                imagenVida1.gameObject.SetActive(true);
+                imagenVida2.gameObject.SetActive(true);
+                imagenVida3.gameObject.SetActive(true);
+                break;
+            case 2:
+                imagenVida1.gameObject.SetActive(true);
+                imagenVida2.gameObject.SetActive(true);
+                imagenVida3.gameObject.SetActive(false);
+                break;
+            case 1:
+                imagenVida1.gameObject.SetActive(true);
+                imagenVida2.gameObject.SetActive(false);
+                imagenVida3.gameObject.SetActive(false);
+                break;
+            case 0:
+                imagenVida1.gameObject.SetActive(false);
+                imagenVida2.gameObject.SetActive(false);
+                imagenVida3.gameObject.SetActive(false);
+                break;
+        }
+
     }
     public void setGameOver(bool win)
-    
+
     {
         textoGameOver.gameObject.SetActive(true);
         if (win)
