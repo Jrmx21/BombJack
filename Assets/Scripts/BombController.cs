@@ -53,6 +53,10 @@ public class BombController : MonoBehaviour
     }
     void Update()
     {
+         if (GameManager.Instance.IsPaused)
+        {
+            return;
+        }
         if (isFinishing)
         {
 

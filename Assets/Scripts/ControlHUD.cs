@@ -29,8 +29,18 @@ public class ControlHUD : MonoBehaviour
     {
         textoVidas.text = "LIVES X" + vidas.ToString();
     }
-    public void setGameOver()
+    public void setGameOver(bool win)
+    
     {
         textoGameOver.gameObject.SetActive(true);
+        if (win)
+        {
+            textoGameOver.text = "YOU WIN!!!";
+        }
+        else
+        {
+            textoGameOver.text = "GAME OVER";
+        }
+
     }
 }

@@ -481,7 +481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &291772409
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1336,6 +1336,7 @@ MonoBehaviour:
   textoPuntuacion: {fileID: 1900489378}
   textoVidas: {fileID: 1805590238}
   textoTiempo: {fileID: 537491080}
+  textoGameOver: {fileID: 291772410}
   puntos: 0
 --- !u!1 &815697446
 GameObject:

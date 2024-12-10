@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
-
-
 
     // SINGLETON 
     private static GameManager instance;
@@ -30,6 +29,9 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
+
+    private int bombsCatched;
+    private int bombsCounter;
     [SerializeField] private ControlHUD controlHUD;
     [SerializeField] private int seconds;
     private const float DELTA_HUD = 1f;
@@ -40,6 +42,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int puntuacion;
     // Coge el texto de la puntuación que es un TMP
 
+    // flag for game paused
+    private bool isPaused = false;
+    // getter and setter for isPaused
+    public bool IsPaused
+    {
+        get => isPaused;
+        set => isPaused = value;
+    }
+
     void Start()
     {
         controlHUD = FindObjectOfType<ControlHUD>();
@@ -47,21 +58,43 @@ public class GameManager : MonoBehaviour
         controlHUD.setVidasTxt(lives);
         controlHUD.setTiempoTxt(0);
         player.OnPlayerKilledEvent += PlayerKilled;
+
+        bombsCounter = FindObjectsOfType<BombController>().Length;
     }
     public void puntuar(int puntos)
     {
         puntuacion = puntuacion + puntos;
         controlHUD.setPuntuacionTxt(puntos);
+        bombsCatched++;
+        if (bombsCatched == bombsCounter)
+        {
+            Debug.Log("Level completed");
+            controlHUD.setGameOver(true);
+            // pausa
+            isPaused = true;
+            // Freeze the physics of the object physics
+            Physics2D.simulationMode = SimulationMode2D.Script;
+            Time.timeScale = 0;
+        }
+
     }
+
     public void PlayerKilled()
     {
         Debug.Log("Player killed");
         controlHUD.setVidasTxt(--lives);
         if (lives <= 0)
         {
-            controlHUD.setGameOver();
+            controlHUD.setGameOver(false);
+            // manera para salir del paso de pausa
+            // Time.timeScale = 0;
+            // forma menos mala pausando el juego
+            isPaused = true;
+            // Freeze the physics of the object physics
+            Physics2D.simulationMode = SimulationMode2D.Script;
+            Time.timeScale = 0;
         }
-        
+
     }
 
     // player reference
@@ -76,13 +109,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
-
-
-    // Update is called once per frame
     void Update()
     {
+        if (isPaused)
+        {
+            return;
+        }
         timerHUD += Time.deltaTime;
         if (timerHUD >= DELTA_HUD)
         {

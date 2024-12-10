@@ -15,6 +15,10 @@ public class BirdController : Enemy
 
     void Update()
     {
+         if (GameManager.Instance.IsPaused)
+        {
+            return;
+        }
         // Bird to player vector
         Vector3 direction = player.transform.position - transform.position;
         if (direction.x > DELTA_X)

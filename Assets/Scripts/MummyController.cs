@@ -28,6 +28,10 @@ public class MummyController : Enemy
 
     void Update()
     {
+         if (GameManager.Instance.IsPaused)
+        {
+            return;
+        }
         if (isMovingRight)
         {
             transform.position += new Vector3(speed * Time.deltaTime, 0, 0);

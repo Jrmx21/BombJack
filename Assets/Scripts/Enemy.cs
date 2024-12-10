@@ -20,13 +20,13 @@ public class Enemy : MonoBehaviour
     }
     protected void Start()
     {
-        player= GameManager.Instance.Player;
+        player = GameManager.Instance.Player;
     }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Player"))
         {
-              player.onPlayerKilled();
+            player.onPlayerKilled();
         }
     }
 }

@@ -38,7 +38,7 @@ public class PlayerControllerInputSystem : MonoBehaviour
     {
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        
+
     }
     public void onPlayerKilled()
     {
@@ -102,6 +102,10 @@ public class PlayerControllerInputSystem : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.Instance.IsPaused)
+        {
+            return;
+        }
         if (jumpState == JumpState.Grounded)
         {
             if (movement.y > 0)
@@ -161,9 +165,13 @@ public class PlayerControllerInputSystem : MonoBehaviour
     }
 
     // For player killed
-   
+
     void Update()
     {
+         if (GameManager.Instance.IsPaused)
+        {
+            return;
+        }
         updateAnimation();
     }
 
